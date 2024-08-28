@@ -3,7 +3,7 @@
 html,body {
   margin: 0;
   padding: 0;
-  background: rgb(16,16,20);
+  background: #110224;
   color: white;
   font-family: "Roboto Mono";
 }
@@ -11,7 +11,7 @@ html,body {
 .image-inverted {
   filter: invert(100%);
 }
-.nav-link {
+.navLink {
   font-weight: 600;
   text-transform: uppercase;
   margin-right: 10px;
