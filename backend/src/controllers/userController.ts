@@ -65,7 +65,7 @@ export const userLogin = async (req: Request , res: Response ) => {
         res.cookie(COOKIE_NAME,token,
             {path : "/" , domain: "localhost" ,expires , httpOnly: true ,signed: true})
 
-        return res.status(201).json({ message: "User Logged-In Successsful" ,id : user._id.toString() })
+        return res.status(201).json({ message: "User Logged-In Successsful" , name: user.name , email : user.email })
         } catch (error) {
         console.log(error)
         return res.status(200).json({message: "ERROR" , cause: error.message})
