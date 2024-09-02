@@ -6,7 +6,7 @@ type User = {
     email:string;
 }
 
-type UserAuth  ={
+type UserAuth  = {
     isLoggedIn : boolean;
     user : User | null;
     login : (email:string, password: string) => Promise<void>;
@@ -38,10 +38,12 @@ export const AuthProvider = ({ children }:{children : ReactNode}) => {
 
 }
 
-export const UseAuth = (): UserAuth => {
-    const context = useContext(AuthContext);
-    if (context === null) {
-        throw new Error("UseAuth must be used within an AuthProvider");
-    }
-    return context;
-}
+// export const UseAuth = (): UserAuth => {
+//     const context = useContext(AuthContext);
+//     if (context === null) {
+//         throw new Error("UseAuth must be used within an AuthProvider");
+//     }
+//     return context;
+// }
+
+export const UseAuth = () => useContext(AuthContext);

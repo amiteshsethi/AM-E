@@ -12,9 +12,15 @@ const Login = () => {
 
   const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();
+    // the type of data formData.get() returns a value of type FormDataEntryValue | null
     const formData = new FormData(e.currentTarget);
-    const email = formData.get("email");
-    const password = formData.get("password");
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+
+    if (!email || !password) {
+      toast.error("Please provide both email and password", { id : "login"});
+      return ;
+    }
 
     try {
       toast.loading("Signing Innnn", {id : "login"})
