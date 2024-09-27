@@ -3,12 +3,12 @@ import penguin from "../assets/penguin.jpg";
 import CustomizedInput from '../components/shared/CustomizedInput';
 import { IoIosLogIn } from 'react-icons/io';
 import React from 'react';
-import { UseAuth } from '../context/Authcontext';
+import { useAuth } from '../context/Authcontext';
 import toast from 'react-hot-toast';
 
 const Login = () => {
 
-  const auth = UseAuth();
+  const auth = useAuth();
 
   const handleSubmit = async (e : React.FormEvent<HTMLFormElement>) =>{
     e.preventDefault();

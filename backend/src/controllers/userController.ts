@@ -3,6 +3,7 @@ import User from "../models/User.js";
 import { hash, compare } from "bcrypt";
 import { createToken } from "../utils/tokenManager.js";
 import { COOKIE_NAME } from "../utils/constants.js";
+import { Console } from "console";
 
 export const getAllUsers = async (req: Request, res: Response, next: NextFunction) => {
   // get all users from database
@@ -15,7 +16,7 @@ export const getAllUsers = async (req: Request, res: Response, next: NextFunctio
   }
 };
 
-export const userSignup = async (req: Request, res: Response , next: NextFunction) => {
+export const userSignup = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { name, email, password } = req.body;
     const existingUser = await User.findOne({ email });
@@ -31,17 +32,17 @@ export const userSignup = async (req: Request, res: Response , next: NextFunctio
     res.cookie(COOKIE_NAME, token, { path: "/", domain: "localhost", expires, httpOnly: true, signed: true });
 
     return res.status(200).json({
-        message: "User Signed-Up Successfully",
-        name: user.name,
-        email: user.email,
-      });
+      message: "User Signed-Up Successfully",
+      name: user.name,
+      email: user.email,
+    });
   } catch (error) {
     console.log(error);
     return res.status(200).json({ message: "ERROR", cause: error.message });
   }
 };
 
-export const userLogin = async (req: Request, res: Response , next: NextFunction) => {
+export const userLogin = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -69,6 +70,26 @@ export const userLogin = async (req: Request, res: Response , next: NextFunction
     });
   } catch (error) {
     console.log(error);
+    return res.status(200).json({ message: "ERROR", cause: error.message });
+  }
+};
+
+export const verifyUser = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const id = res.locals.jwtData.id;
+    const user = await User.findById(id);
+
+    if (!user) {
+      return res.status(401).send("User not registered OR Token malfunctioned");
+    }
+    if (user._id.toString() !== res.locals.jwtData.id) {
+      return res.status(401).send("Permissions didn't match");
+    }
+    return res
+      .status(200)
+      .json({ message: "OK", name: user.name, email: user.email });
+  } catch (error) {
+    // console.log(error);
     return res.status(200).json({ message: "ERROR", cause: error.message });
   }
 };

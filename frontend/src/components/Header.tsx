@@ -1,4 +1,4 @@
-import { UseAuth } from "../context/Authcontext";
+import { useAuth } from "../context/Authcontext";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import NavigationButton from "./shared/NavigationButton";
@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { Typography } from "@mui/material";
 
 const Header = () => {
-  const auth = UseAuth();
+  const auth = useAuth();
   return (
     <AppBar sx={{ bgcolor: "transparent", position: "static", boxShadow: "none" }}>
       <Toolbar sx={{ display: "flex" }}>
